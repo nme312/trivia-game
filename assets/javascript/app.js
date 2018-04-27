@@ -60,7 +60,7 @@ var currentQuestion;
 var currentAnswers;
 
 //create game timer and reveal timer
-questionInterval = setInterval(triviaScreen, 5000);
+questionInterval = setInterval(triviaScreen, 10000);
 revealInterval = setTimeout(revealScreen, 5000);
 
 //gain access to buttons and divs
