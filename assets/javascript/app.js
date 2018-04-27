@@ -43,12 +43,7 @@ var triviaList = [
     },
 ]
 
-//loop through trivia list array
-// for (i = 0; i < triviaList.length; i++) {
-//     console.log(triviaList[i].question);
-//     console.log(triviaList[i].answers);
-//     console.log(triviaList[i].correct);
-// }
+var userAnswers = [];
 
 //create array to store user answers
 var correctAnswers = 0;
@@ -65,36 +60,64 @@ var currentQuestion;
 var currentAnswers;
 
 //create game timer and reveal timer
-questionInterval = setInterval(triviaScreen, 1000);
-
-//screen functions to run game and reveal screens
-var x = 0;
-function triviaScreen() {
-
-    console.log(x);
-    console.log(triviaList[x].question);
-    console.log(triviaList[x].answers);
-    console.log(triviaList[x].answers[triviaList[x].correct]);
-    x++;
-    if(x === triviaList.length) {
-        clearInterval(questionInterval);
-    }
-
-    revealInterval = setTimeout(revealScreen, 5000);
-
-    function revealScreen() {
-        console.log(triviaList[x].answers[triviaList[x].correct]);
-    }
-}
+questionInterval = setInterval(triviaScreen, 5000);
+revealInterval = setTimeout(revealScreen, 5000);
 
 //gain access to buttons and divs
 var questionDiv = $("#question");
 var answersDiv = $("#answers");
+var chosenButton = $(".choice");
 
 var radioA = $("#answer-a");
+var choseA = radioA.val();
+
 var radioB = $("#answer-b");
+var choseB = radioB.val();
+
 var radioC = $("#answer-c");
+var choseC = radioC.val();
+
 var radioD = $("#answer-d");
+var choseD = radioD.val();
+
+
+
+
+//screen functions to run game and reveal screens
+var x = 0;
+function triviaScreen() {
+    console.log(userAnswers);
+    // console.log(x);
+    // console.log(triviaList[x].question);
+    // console.log(triviaList[x].answers);
+    // console.log(triviaList[x].answers[triviaList[x].correct]);
+    
+    // function used to deselect buttons when question advances
+    chosenButton.on("click", function () {
+        $(this).prop("checked", false);
+        userAnswers.push($(this).attr("id"));
+        triviaScreen();
+    });
+    
+    questionDiv.text(triviaList[x].question);
+
+    radioA.text(triviaList[x].answers[0]);
+    radioB.text(triviaList[x].answers[1]);
+    radioC.text(triviaList[x].answers[2]);
+    radioD.text(triviaList[x].answers[3]);
+
+    x++;
+
+    if (x === triviaList.length) {
+        clearInterval(questionInterval);
+    }
+}
+
+
+
+function revealScreen() {
+    // console.log("reveal " + triviaList[x].answers[triviaList[x].correct]);
+}
 
 // console.log(radioA.val());
 // console.log(radioB.val());
